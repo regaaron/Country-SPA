@@ -1,2 +1,8 @@
 <app-search-input (value)="onSearch($event)" placeholder="Buscar por capital de mi pais"/>
-<app-country-list [countries]="countries()"/>
+
+
+@if (isError()) {
+    <h3 class="mt-2">{{ isError() }}</h3>
+}@else {
+    <app-country-list [countries]="countries()"/>
+}

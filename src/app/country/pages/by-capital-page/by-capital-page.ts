@@ -26,11 +26,17 @@ countries = signal<Country[] | null>(null);
     this.isloading.set(true)
     this.isError.set(null)
     this.countryService.searchByCapital(value)
-    .subscribe(resp => {
+    .subscribe({
+      next:(resp) => {
       this.isloading.set(false)
       this.countries.set(resp)
       console.log({resp});
-      
+      },
+      error: (err) => {
+          this.isloading.set(false);
+          this.countries.set([]);
+          this.isError.set(`No se encontro un pais con esa capital ${value}`)
+      },
     })
     
   }
