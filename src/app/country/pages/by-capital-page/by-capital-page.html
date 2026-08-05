@@ -1,8 +1,8 @@
-<app-search-input (value)="onSearch($event)" placeholder="Buscar por capital de mi pais"/>
+<app-search-input (value)="query.set($event)" placeholder="Buscar por capital de mi pais"/>
 
 
-@if (isError()) {
-    <h3 class="mt-2">{{ isError() }}</h3>
-}@else {
-    <app-country-list [countries]="countries()"/>
+@if (countryResource.error()) {
+    <h3 class="mt-2">{{ countryResource.error() }}</h3>
+}@if (countryResource.hasValue()) {
+    <app-country-list [countries]="countryResource.value()"/>
 }

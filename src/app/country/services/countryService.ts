@@ -36,4 +36,32 @@ export class CountryService {
             })
         );
     }
+
+    searchByCountry(query:string) : Observable<Country[]>{
+
+        const url = `${API_URL}/name?q=${query}&pretty=1`;
+
+        return this.http.get<RESTCountry>(url,
+            {
+                headers: {Authorization: `Bearer ${environment.apiKey}`}
+            }
+        )
+        .pipe(
+            map( restCountries => CountryMapper.mapResponseToCountryArray(restCountries)),
+            map( countries =>{
+                if(countries.length === 0){
+                    throw new Error('No se encontro ningun pais')
+                }
+                return countries
+            }),
+            catchError((error) => {
+                console.log('Error fetching' ,error);
+
+                return throwError(
+                    () => new Error(`No se pudo obtener paises  con ese query ${query}`)
+                )
+                
+            })
+        );
+    }
 }
