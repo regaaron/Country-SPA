@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { environment } from '../../../environments/environments';
 import { RESTCountry } from '../interfaces/rest-countries.interfaces';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, throwError } from 'rxjs';
 import { CountryMapper } from '../mappers/country.maaper';
 import { Country } from '../interfaces/country.interfaces';
 const API_URL = 'https://api.restcountries.com/countries/v5';
@@ -48,6 +48,7 @@ export class CountryService {
         )
         .pipe(
             map( restCountries => CountryMapper.mapResponseToCountryArray(restCountries)),
+            delay(3000),
             map( countries =>{
                 if(countries.length === 0){
                     throw new Error('No se encontro ningun pais')
