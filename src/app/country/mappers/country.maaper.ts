@@ -7,7 +7,7 @@ export class CountryMapper {
   static mapObjectToCountry(country: Object): Country {
 
     return {
-      cca2: country.uuid,
+      cca2: country.codes.alpha_2,
       flag: country.flag.emoji,
       FlagSvg: country.flag.url_svg,
       name: country.names.translations["spa"]?.common ?? country.names.common,

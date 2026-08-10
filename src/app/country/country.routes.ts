@@ -26,7 +26,7 @@ export const countryRoutes: Routes = [
             component: ByRegion
         },
         {
-            path: 'by/:slug',
+            path: 'by/:code',
             component: ByDinamicPage
         },
         {
