@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { environment } from '../../../environments/environments';
 import { RESTCountry } from '../interfaces/rest-countries.interfaces';
-import { catchError, delay, map, Observable, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, of, throwError } from 'rxjs';
 import { CountryMapper } from '../mappers/country.maaper';
 import { Country } from '../interfaces/country.interfaces';
 const API_URL = 'https://api.restcountries.com/countries/v5';
@@ -12,6 +12,9 @@ export class CountryService {
     private http = inject(HttpClient)
 
     searchByCapital(query:string) : Observable<Country[]>{
+
+        console.log(`emitiendo valor de ${query}`);
+        
         // query = query.toLowerCase();
         return this.http.get<RESTCountry>(`${API_URL}/capitals?q=${query}&pretty=1`,
             {
