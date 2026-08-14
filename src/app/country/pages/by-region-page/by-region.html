@@ -1,3 +1,18 @@
-<p>by-region works!</p>
+<section class="flex gap-2">
+  @for (region of regions; track region) {
+    <button
+    class="btn"
+    [ngClass]="selectedRegion() === region
+        ? 'bg-orange-500 text-white'
+        : ''"
+    (click)="selectedRegion.set(region)"
+    >
+    {{ region }}
+    </button>
+  }
+</section>
 
-<app-country-list/>
+<app-country-list [countries]="countryResource.hasValue() ? countryResource.value(): []"
+    [errorMessage]="countryResource.error()"
+    [isLoading]="countryResource.isLoading()"
+    [isEmpty]="countryResource.hasValue() && countryResource.value().length === 0"/>
