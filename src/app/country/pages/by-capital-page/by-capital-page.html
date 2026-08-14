@@ -1,4 +1,7 @@
-<app-search-input (value)="query.set($event)" placeholder="Buscar por capital de mi pais"/>
+<app-search-input (value)="query.set($event)" 
+placeholder="Buscar por capital de mi pais"
+[initialValue]="query()"
+/>
 
 
 <app-country-list [countries]="countryResource.hasValue() ? countryResource.value(): []"

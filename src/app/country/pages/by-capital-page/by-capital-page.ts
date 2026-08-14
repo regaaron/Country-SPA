@@ -1,4 +1,4 @@
-import { Component, inject, resource, signal } from '@angular/core';
+import { Component, inject, linkedSignal, resource, signal } from '@angular/core';
 import { SearchInput } from "../../../shared/components/search-input/search-input";
 import { CountryLayout } from "../../layout/country-layout/country-layout";
 import { CountryList } from '../../components/country-list/country-list';
@@ -8,6 +8,7 @@ import { CountryMapper } from '../../mappers/country.maaper';
 import { Country } from '../../interfaces/country.interfaces';
 import { firstValueFrom, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -17,8 +18,13 @@ import { rxResource } from '@angular/core/rxjs-interop';
 export class ByCapitalPage {
 
   countryService = inject(CountryService)
-  query = signal('');
+  
+  activatedRoute = inject(ActivatedRoute)
+  queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? '';
 
+  
+  query = linkedSignal(() => this.queryParam);
+  
    countryResource = rxResource({
   params: () => ({query: this.query()}),
   stream: ({params}) =>{
@@ -32,39 +38,4 @@ export class ByCapitalPage {
   }
 });
 
-//  countryResource = resource({
-//   params: () => ({query: this.query()}),
-//   loader: async({params}) =>{
-//     if (!params.query) return [];
-//     return await firstValueFrom(
-//       this.countryService.searchByCapital(params.query)
-//     );
-//   }
-// });
-
-//   isloading = signal(false)
-//   isError = signal<string|null>(null)
-// countries = signal<Country[] | null>(null);
-
-//  onSearch(value:string){
-//     if(this.isloading()) return;
-
-
-//     this.isloading.set(true)
-//     this.isError.set(null)
-//     this.countryService.searchByCapital(value)
-//     .subscribe({
-//       next:(resp) => {
-//       this.isloading.set(false)
-//       this.countries.set(resp)
-//       console.log({resp});
-//       },
-//       error: (err) => {
-//           this.isloading.set(false);
-//           this.countries.set([]);
-//           this.isError.set(`No se encontro un pais con esa capital ${value}`)
-//       },
-//     })
-    
-//   }
 }
