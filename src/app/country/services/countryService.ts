@@ -17,6 +17,8 @@ export class CountryService {
     searchByCapital(query:string) : Observable<Country[]>{
 
         console.log(`emitiendo valor de ${query}`);
+        console.log(environment.apiKey);
+        
 
         if(this.queryCacheCapital.has(query)){
             return of(this.queryCacheCapital.get(query)!)
