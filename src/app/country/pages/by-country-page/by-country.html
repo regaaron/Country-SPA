@@ -1,4 +1,6 @@
-<app-search-input (value)="query.set($event)" placeholder="Buscar por país"/>
+<app-search-input (value)="query.set($event)" placeholder="Buscar por país"
+[initialValue]="query()"
+/>
 
 
 
